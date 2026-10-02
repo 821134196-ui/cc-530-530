@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>运营调度 · 企业通勤班车</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main>
+  <h1>运营调度台</h1>
+  <p class="muted">仅可操作被授权的线路；出勤核销、换车、绕行都在本班次进行并留痕。</p>
+
+  <div class="card grey">
+    <div class="row">
+      <div class="col">
+        <label>班次</label>
+        <select id="tripSelect" style="max-width:420px"></select>
+      </div>
+      <div style="align-self:flex-end">
+        <button class="ghost small" id="resetBtn">重置演示数据</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">运行状态与实际乘坐</h2>
+    <div id="statusLine"></div>
+    <div id="segBars"></div>
+  </div>
+
+  <div class="row" style="align-items:flex-start">
+    <div class="col">
+      <div class="card">
+        <h2 style="margin-top:0">预约与候补</h2>
+        <div id="resTable"></div>
+      </div>
+      <div class="card">
+        <h2 style="margin-top:0">实际乘坐记录（扫码流水）</h2>
+        <div id="recordsTable"></div>
+      </div>
+    </div>
+
+    <div class="col" style="max-width:380px">
+      <div class="card">
+        <h2 style="margin-top:0">临时换车（缩容触发降补）</h2>
+        <select id="vehicleSel"></select>
+        <button id="swapBtn" style="margin-top:8px">换车并重排容量</button>
+        <p class="muted" id="swapHint"></p>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0">线路绕行（跳过站点）</h2>
+        <div id="skipStops"></div>
+        <button class="ghost" id="detourBtn" style="margin-top:8px">应用绕行</button>
+        <p class="muted">受影响预约自动改到最近可服务站点并通知确认；无可乘区间则取消。</p>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0">司机出勤核销</h2>
+        <div id="drivers"></div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0">班次运行</h2>
+        <button class="green" id="arriveBtn">到站</button>
+        <button id="departBtn">关门离站</button>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="/common.js"></script>
+<script src="/ops.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>司机核验 · 企业通勤班车</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main>
+  <h1>司机车载端</h1>
+
+  <div class="card grey">
+    <label>我的班次</label>
+    <select id="tripSelect" style="max-width:420px"></select>
+  </div>
+
+  <div class="bigboard">
+    <div class="state-label" id="stateLabel">下一站</div>
+    <div class="next-stop" id="nextStop">—</div>
+    <div class="plate" id="plateLine"></div>
+    <div class="actions">
+      <button id="arriveBtn" class="green">到站</button>
+      <button id="departBtn">关门离站</button>
+    </div>
+    <div class="muted" style="color:#bcd4ec;margin-top:10px" id="phaseHint"></div>
+  </div>
+
+  <div class="row" style="align-items:flex-start;margin-top:16px">
+    <div class="col" style="flex:1.2">
+      <div class="card">
+        <h2 style="margin-top:0">待上车名单 <span class="muted" id="pickHint"></span></h2>
+        <div id="pickList"></div>
+      </div>
+      <div class="card">
+        <h2 style="margin-top:0">已在车上</h2>
+        <div id="onboard"></div>
+      </div>
+    </div>
+
+    <div class="col" style="max-width:400px">
+      <div class="card">
+        <h2 style="margin-top:0">扫码核验</h2>
+        <input type="text" id="ticketInput" placeholder="输入/扫描票号，如 T1-A1B2C3"
+               style="font-size:18px;padding:12px">
+        <div class="row" style="margin-top:10px">
+          <button class="green" id="boardScanBtn">核验上车</button>
+          <button id="alightScanBtn">登记下车</button>
+        </div>
+        <div class="scan-result" id="scanResult"></div>
+        <p class="muted">重复扫码直接返回首次核验结果，不会重复计数。</p>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0">我的出勤</h2>
+        <div id="attendanceBox"></div>
+        <p class="muted">出勤由运营员核销，司机端只读。</p>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="/common.js"></script>
+<script src="/driver.js"></script>
+</body>
+</html>

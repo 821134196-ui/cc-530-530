@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>企业通勤班车</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main>
+  <h1>线路图</h1>
+  <p class="muted">企业通勤班车按线路、站点、班次与车辆座位数开放预约。
+    点击线路查看站点顺序；进入 <a href="/book.html">员工预订</a> 按区间余座下单，
+    <a href="/driver.html">司机车载端</a> 核验上车，<a href="/ops.html">运营调度台</a> 查看实际乘坐与空座。</p>
+  <div id="routes"></div>
+
+  <h2>全部班次实时概览</h2>
+  <div class="card">
+    <table id="tripTable">
+      <thead><tr>
+        <th>班次</th><th>线路</th><th>车辆</th><th>状态</th>
+        <th>区间占用（load / 座位）</th><th>候补</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</main>
+<script src="/common.js"></script>
+<script>
+async function init() {
+  await renderTopbar("");
+  const [routes, trips] = await Promise.all([
+    api("/api/routes"), api("/api/trips?detail=1"),
+  ]);
+  $("#routes").innerHTML = routes.map((r) => `
+    <div class="card">
+      <h2 style="margin-top:0">${esc(r.name)} <span class="muted" style="font-size:13px">${r.id}</span></h2>
+      ${renderStopDiagram(r.stops.map((s, i) => ({ seq: i, name: s.name, skipped: false })))}
+    </div>`).join("");
+
+  $("#tripTable tbody").innerHTML = trips.map((t) => `
+    <tr>
+      <td><a href="/book.html">${esc(t.name)}</a></td>
+      <td>${esc(t.route_name)}</td>
+      <td>${esc(t.plate)}（${t.seats}座）</td>
+      <td>${badge(t.status)}</td>
+      <td>${t.segments.map((s) => {
+        const full = s.free === 0;
+        return `<span class="seg-chip ${full ? "zero" : ""}">
+          ${esc(s.from)}→${esc(s.to)} <b>${s.load}/${s.seats}</b></span>`;
+      }).join("")}</td>
+      <td>${t.counts.waitlisted ? `<b style="color:var(--amber)">${t.counts.waitlisted}</b>` : "—"}</td>
+    </tr>`).join("");
+}
+init();
+</script>
+</body>
+</html>

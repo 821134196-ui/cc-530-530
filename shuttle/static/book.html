@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>员工预订 · 企业通勤班车</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main>
+  <h1>班次预订</h1>
+  <p class="muted">选择班次后按站点顺序图选择上车站与下车站。座位按“区间”计算——
+    整车没满但您乘坐的区间满了，也会进入候补。</p>
+
+  <div class="card grey">
+    <div class="row">
+      <div class="col">
+        <label>班次</label>
+        <select id="tripSelect"></select>
+      </div>
+      <div class="col" style="max-width:280px">
+        <label>车辆</label>
+        <div id="tripMeta" class="muted"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="align-items:flex-start">
+    <div class="col" style="flex:1.2">
+      <div class="card">
+        <h2 style="margin-top:0">站点顺序与区间余座</h2>
+        <div id="diagram"></div>
+        <p class="muted" id="diagramHint"></p>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0">预约 / 改站</h2>
+        <div class="row">
+          <div class="col">
+            <label>上车站</label>
+            <select id="boardSel"></select>
+          </div>
+          <div class="col">
+            <label>下车站</label>
+            <select id="alightSel"></select>
+          </div>
+          <div style="align-self:flex-end">
+            <button class="green" id="bookBtn">提交预约</button>
+          </div>
+        </div>
+        <div id="myBox" style="margin-top:14px"></div>
+      </div>
+    </div>
+
+    <div class="col" style="max-width:360px">
+      <div class="card">
+        <h2 style="margin-top:0">我的通知</h2>
+        <div id="inbox"><p class="muted">暂无通知</p></div>
+      </div>
+      <div class="card">
+        <h2 style="margin-top:0">候补队列</h2>
+        <div id="waitlist"></div>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="/common.js"></script>
+<script src="/book.js"></script>
+</body>
+</html>
